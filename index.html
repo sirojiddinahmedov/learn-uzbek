@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tilshunos | Изучайте узбекский профессионально</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --bg: #ffffff;
+            --text: #1f2937;
+            --card-bg: #f3f4f6;
+            --transition: 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --bg: #0f172a;
+            --text: #f8fafc;
+            --card-bg: #1e293b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            transition: background var(--transition), color var(--transition);
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary); }
+
+        .controls { display: flex; gap: 15px; align-items: center; }
+
+        select, .theme-toggle {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--primary);
+            background: transparent;
+            color: var(--text);
+            cursor: pointer;
+            outline: none;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 10%;
+        }
+
+        .hero h1 { font-size: clamp(2rem, 5vw, 4rem); margin-bottom: 20px; line-height: 1.1; }
+        .hero p { font-size: 1.2rem; max-width: 600px; opacity: 0.8; margin-bottom: 30px; }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .btn:hover { opacity: 0.9; transform: scale(1.05); }
+
+        /* Features - Responsive Grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 50px 5%;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            transition: var(--transition);
+        }
+
+        .card:hover { transform: translateY(-10px); }
+
+        @media (max-width: 600px) {
+            nav { flex-direction: column; gap: 15px; }
+            .hero { height: auto; padding: 100px 5%; }
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+    <nav>
+        <div class="logo">Tilshunos</div>
+        <div class="controls">
+            <select id="langSwitcher">
+                <option value="ru">Русский</option>
+                <option value="uz">O'zbekcha</option>
+                <option value="en">English</option>
+            </select>
+            <button class="theme-toggle" id="themeBtn">🌙 Mode</button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1 id="heroTitle">Изучайте узбекский через контекст кино</h1>
+        <p id="heroDesc">Забудьте про скучные учебники. Смотрите отрывки, понимайте сленг и живую речь с помощью интерактивных субтитров.</p>
+        <a href="#" class="btn" id="mainBtn">Начать бесплатно</a>
+    </section>
+
+    <section class="features">
+        <div class="card">
+            <h3 id="f1Title">Контекст</h3>
+            <p id="f1Desc">Живые примеры из фильмов и сериалов вместо сухих правил.</p>
+        </div>
+        <div class="card">
+            <h3 id="f2Title">Академично</h3>
+            <p id="f2Desc">Мы учим не только говорить, но и грамотно писать на узбекском.</p>
+        </div>
+        <div class="card">
+            <h3 id="f3Title">Система</h3>
+            <p id="f3Desc">Пошаговое обучение от уровня А1 до продвинутого C1.</p>
+        </div>
+    </section>
+
+    <script>
+        // 1. Ma'lumotlar bazasi (Language Dictionary)
+        const translations = {
+            ru: {
+                heroTitle: "Изучайте узбекский через контекст кино",
+                heroDesc: "Забудьте про скучные учебники. Смотрите отрывки, понимайте сленг и живую речь.",
+                mainBtn: "Начать бесплатно",
+                f1Title: "Контекст", f1Desc: "Живые примеры из фильмов и сериалов.",
+                f2Title: "Академично", f2Desc: "Грамотная речь и правила письма.",
+                f3Title: "Система", f3Desc: "Пошаговое обучение от А1 до C1."
+            },
+            uz: {
+                heroTitle: "O'zbek tilini kino orqali o'rganing",
+                heroDesc: "Zerikarli darsliklarni unuting. Kinolardan parchalar orqali jonli tilni o'rganing.",
+                mainBtn: "Bepul boshlash",
+                f1Title: "Kontekst", f1Desc: "Filmlardan olingan real misollar.",
+                f2Title: "Akademik", f2Desc: "To'g'ri so'zlashuv va yozish qoidalari.",
+                f3Title: "Tizim", f3Desc: "A1 darajadan C1 darajagacha bosqichma-bosqich."
+            },
+            en: {
+                heroTitle: "Learn Uzbek through Cinema Context",
+                heroDesc: "Forget boring textbooks. Learn real language through movie clips and interactive subtitles.",
+                mainBtn: "Start for free",
+                f1Title: "Context", f1Desc: "Real-life examples from movies and series.",
+                f2Title: "Academic", f2Desc: "Proper speech and writing rules.",
+                f3Title: "Systematic", f3Desc: "Step-by-step learning from A1 to C1."
+            }
+        };
+
+        // 2. Elementlarni JavaScript orqali boshqarish
+        const langSwitcher = document.getElementById('langSwitcher');
+        const themeBtn = document.getElementById('themeBtn');
+        const body = document.body;
+
+        // Tilni o'zgartirish funksiyasi
+        langSwitcher.addEventListener('change', (e) => {
+            const lang = e.target.value;
+            document.getElementById('heroTitle').innerText = translations[lang].heroTitle;
+            document.getElementById('heroDesc').innerText = translations[lang].heroDesc;
+            document.getElementById('mainBtn').innerText = translations[lang].mainBtn;
+            document.getElementById('f1Title').innerText = translations[lang].f1Title;
+            document.getElementById('f1Desc').innerText = translations[lang].f1Desc;
+            document.getElementById('f2Title').innerText = translations[lang].f2Title;
+            document.getElementById('f2Desc').innerText = translations[lang].f2Desc;
+            document.getElementById('f3Title').innerText = translations[lang].f3Title;
+            document.getElementById('f3Desc').innerText = translations[lang].f3Desc;
+        });
+
+        // Dark Mode funksiyasi
+        themeBtn.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            body.setAttribute('data-theme', newTheme);
+            themeBtn.innerText = newTheme === 'light' ? '🌙 Mode' : '☀️ Light';
+        });
+    </script>
+</body>
+</html>
